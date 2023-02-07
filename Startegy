@@ -1,2 +1,26 @@
-let item=document.querySelectro('.list-group-item')
-item.style.color='green';
+// let item=document.querySelectro('.list-group-item')
+// item.style.color='green';
+// lastItem.style.display['none'];
+
+
+let itemList=document.querySelector('#items');
+itemList.parentNode.style.backgroundColor='#yellow';
+itemList.firstElementChild.textContent='HEllo';
+console.log(itemList.firstChild);
+console.log(itemList.lastChild);
+itemList.lastElementChild.textContent='HEllo1';
+console.log(itemList.nextSibling);
+console.log(itemList.nextElementSibling);
+console.log(itemList.previousSibling);
+itemList.previousElementSibling.style.color='Green';
+let newDiv=document.createElement('div');
+newDiv.className='Hello';
+newDiv.id='Hello1';
+newDiv.setAttribute('title','Hello div');
+let newDivText=document.createTextNode('Hello World');
+newDiv.appendChild(newDivText);
+let container=document.querySelector('header .container');
+let h1=document.querySelector('header h1');
+newDiv.style.fontSize='30px';
+container.insertBefore(newDiv, h1);
+
