@@ -1,5 +1,2 @@
-|Hit
-High win rate
-Good rr
-Indicator
-rrr
+let item=document.querySelectro('.list-group-item')
+item.style.color='green';
