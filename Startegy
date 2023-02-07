@@ -28,6 +28,8 @@
       <li style="background-color:green" class="list-group-item"><b>Item 3</b></li>
       <li class="list-group-item"><b>Item 4</b></li>
       <li>This one is added without the prior common classl</li>
+      <script src="dom.js"></script>
+
     </ul>
    </div>
   </div>
