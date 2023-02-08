@@ -36,7 +36,17 @@
       </ul> -->
     </section>
     
+<script src="Untitled-2.js">
+let myobj={
+  name:'Amiya',
+  age: 56
+};
+let myobjserialized=JSON.stringify(myobj);
+localStorage.setItem("myobj", myobjserialized);
+let myobjdeserialized=JSON.parse(localStorage.getItem("myobj"));
+console.log(myobjdeserialized);
 
+</script>
     
     
     
