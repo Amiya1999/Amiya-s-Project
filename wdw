@@ -18,18 +18,26 @@
                 let name=event.target.Name.value;
                 let email=event.target.EMAIL.value;
                 let phone=event.target.Phone.value;
-            
-            let obj (
+            }
+            let obj {
                 name,
                 email,
-                phone
-            )
+                phone}
             localStorage.setItem(obj.EMAIL, JSON.stringify(obj));
             showlocalusersonscreen(obj)
             function showlocalusersonscreen(obj) {
                 let parentElem=document.getElementById('listofitems')
                 parentElem.innerHTML + `<li> ${obj.Name} - ${obj.EMAIL} - ${obj.Phone}</li>`;
-            }
+               let deletebutton=document.createElement('input')
+               deletebutton.type="button";
+               deletebutton.value="delete";
+               deletebutton.onclick={} => {
+                localStorage.removeItem(obj.EMAIL)
+                parentElem.removeChild(childElem)
+               }
+                childElem.appendChild(deletebutton)
+                parentElem.appendChild(childElem)
+                  }
           </script>
           
           </body>
