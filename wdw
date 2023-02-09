@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <body>
+        <header><h1>SUBMIT YOUR DETAILS TO VIEW</h1></header>
+       <form onsubmit="saveToLocalStorage(event)">
+        <label>Name</label>
+        <input type="text" name="Name" required/>
+        <label>EMAIL:</label>
+        <input type="email" name="EMAIL" required/>
+        <label>Phone</label>
+        <input type="tel" name="Phone" required/>
+        <button>Submit</button>
+          </form>
+          <ul id="listofitems"></ul>
+          <script>
+            function saveToLocalStorage(event){
+                event.preventDefault();
+                let name=event.target.Name.value;
+                let email=event.target.EMAIL.value;
+                let phone=event.target.Phone.value;
+            
+            let obj (
+                name,
+                email,
+                phone
+            )
+            localStorage.setItem(obj.EMAIL, JSON.stringify(obj));
+            showlocalusersonscreen(obj)
+            function showlocalusersonscreen(obj) {
+                let parentElem=document.getElementById('listofitems')
+                parentElem.innerHTML + `<li> ${obj.Name} - ${obj.EMAIL} - ${obj.Phone}</li>`;
+            }
+          </script>
+          
+          </body>
+          </html>
