@@ -31,13 +31,25 @@
                let deletebutton=document.createElement('input')
                deletebutton.type="button";
                deletebutton.value="delete";
-               deletebutton.onclick={} => {
+               deletebutton.onclick=() => {
                 localStorage.removeItem(obj.EMAIL)
                 parentElem.removeChild(childElem)
                }
-                childElem.appendChild(deletebutton)
-                parentElem.appendChild(childElem)
+               let editbutton=document.createElement('input')
+               editbutton.type="button";
+               editbutton.value="edit";
+               editbutton.onclick=() => {
+                localStorage.removeItem(obj.EMAIL)
+                parentElem.removeChild(childElem)
+                document.getElementById('nameInputTag').value=obj.Name;
+                document.getElementById('emailInputTag').value=obj.EMAIL;
+                document.getElementById('phoneInputTag').value=obj.Phone;
+               }
+                childElem.appendChild(deletebutton);
+                childElem.appendChild(editbutton);
+                parentElem.appendChild(childElem);
                   }
+
           </script>
           
           </body>
