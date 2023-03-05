@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>List Your Products</title>
+  </head>
+  <body>
+    <h1>Product listing App</h1>
+    <label for="name">Name of the product:</label>
+    <input type="text" id="name" /><br />
+    <label for="amount">Amount of the Product:</label>
+    <input type="number" id="amount" /><br />
+    <button onclick="bookAppointment()">Confirm</button>
+    <h2>Products Featured</h2>
+    <ul id="appointments" ></ul>
+  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js"></script>
+  
+ <script >
+  // Get appointments from local storage or initialize an empty array
+let appointments = JSON.parse(localStorage.getItem("appointments")) || [];
+
+// Function to add an appointment to the appointments array and save to local storage
+function addAppointment(name,amount) {
+  let appointment = {
+    name: name,
+    amount: amount
+  };
+  appointments.push(appointment);
+  localStorage.setItem("appointments", JSON.stringify(appointments));
+  axios.post("https://crudcrud.com/api/622365493c5842e0ba7664d367220e48/product",appointment).then((response)=>{
+    displayAppointments(response.data);
+    console.log(response);
+  })
+  .catch((err)=>{
+    console.log(err)
+  })
+}
+function deleteAppointment(index) {
+  appointments.splice(index, 1);
+  localStorage.setItem("appointments", JSON.stringify(appointments));
+  axios.delete("https://crudcrud.com/api/622365493c5842e0ba7664d367220e48/product", payload, header);
+}
+
+// Function to display the appointments in the UI
+function displayAppointments() {
+  let appointmentsList = document.getElementById("appointments");
+  appointmentsList.innerHTML = "";
+  appointments.forEach((appointment, index) => {
+    let li = document.createElement("li");
+    li.textContent = `${appointment.name} - ${appointment.amount}`;
+    let deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+    deleteButton.onclick = () => {
+      deleteAppointment(index);
+      displayAppointments();
+    };
+    li.appendChild(deleteButton);
+    appointmentsList.appendChild(li);
+  });
+}
+
+// Function to book an appointment
+function bookAppointment() {
+  let name = document.getElementById("name").value;
+  let amount = document.getElementById("amount").value;
+  if (name && amount) {
+    addAppointment(name, amount);
+    displayAppointments();
+    document.getElementById("name").value = "";
+    document.getElementById("amount").value = "";
+  } else {
+    alert("Please fill in all fields.");
+  }
+}
+
+//clear ALL localstorage
+function clearlocal(){
+  setTimeout(() => {
+    localStorage.clear();
+  },500);
+}
+
+// Display the appointments on page load
+displayAppointments();
+//clearlocal();
+ </script>
+</html>
