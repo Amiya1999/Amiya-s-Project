@@ -1,0 +1,19 @@
+let  http= require('http');
+
+// function rqlistner(req,res){
+
+
+
+// }
+
+// http.createServer(rqlistner);
+
+const server=http.createServer((req,res)=>{
+
+    console.log('aMIYA');
+
+});
+
+
+
+server.listen(3000);
