@@ -1,0 +1,46 @@
+const http= require('http');
+
+const express= require('express');
+
+const bodyParser=require('body-parser');
+
+//const routes=require('./routes');
+
+//console.log(routes.sometext);
+
+
+
+//  app.use((req,res,next )=>{
+//     console.log("a");
+// next();// to iterate through server requesthandlers..
+// });
+
+app.use(bodyParser.urlencoded()); 
+
+app.use('/',(req,res,next )=>{
+    console.log("this alwys runs");
+    next();
+});
+
+app.use('/add-product',(req,res,next )=>{
+    console.log("in another middleware");
+    res.send('<form action="/product" method="POST"><input type="text" name="title"><button type="submit">addproduct</button></form>')
+});
+
+app.use('/product',(req,res,next)=>{
+     console.log(req.body);
+    res.redirect('/');
+});
+
+app.use('/',(req,res,next )=>{
+    
+    res.send('<h1>Hello</h1>')
+});
+
+//const server=http.createServer(routes);
+
+// const server=http.createServer(app);
+
+// server.listen(3000);
+//instead
+app.listen(3000);
