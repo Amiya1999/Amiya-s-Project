@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Insert DATA</h1>
+    <form action="/submit" method="POST">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" /><br />
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" /><br />
+        <label for="time">Time:</label>
+        <input type="time" id="time" name="time" /><br />
+        <button type="submit">Book Appointment</button>
+    </form>
+    <h2>Appointments</h2>
+    <ul id="appointments"></ul>
+    <script>
+      let appointments=[];
+        fetch('/appointments')
+        .then(response => response.json())
+        .then(data => {
+            let appointmentsList = document.getElementById("appointments");
+            appointmentsList.innerHTML = "";
+            data.forEach((appointment) => {
+                let li = document.createElement("li");
+                li.textContent = `${appointment.name} - ${appointment.date} ${appointment.time}`;
+                appointmentsList.appendChild(li);
+            });
+        })
+        .catch(error => console.log(error));
+    </script>
+</body>
+</html>
