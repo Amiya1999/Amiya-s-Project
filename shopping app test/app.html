@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Shopify</title>
+<style>
+  body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  }
+
+  .container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  }
+
+  h1 {
+  font-size: 36px;
+  text-align: center;
+  margin-bottom: 20px;
+  }
+
+  form {
+  margin-bottom: 20px;
+  }
+
+  label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 18px;
+  }
+
+  input[type="text"],
+  input[type="number"] {
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 100%;
+  font-size: 16px;
+  margin-bottom: 20px;
+  }
+
+  button[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  }
+
+  button[type="submit"]:hover {
+  background-color: #45a049;
+  }
+
+  ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  }
+
+  li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  }
+
+  li span {
+  font-size: 18px;
+  }
+
+  li button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 10px;
+  }
+
+  li button:hover {
+  background-color: #d32f2f;
+  }
+
+  #total-expenses {
+  font-size: 24px;
+  text-align: right;
+  margin-top: 20px;
+  }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<style>
+  label {
+  display: block;
+  margin-bottom: 10px;
+  }
+</style>
+  
+</head>
+<body>
+<div class="container">
+  <h1>Shopping Terminal</h1>
+  <form>
+  <label for="item">Item Name:</label>
+  <input type="text" id="item" name="item" required>
+  <label for="amount">Item Amount:</label>
+  <input type="number" id="amount" name="amount" required>
+  <label for="category">Category:</label>
+  <input type="text" id="category" name="category" required>
+  <button type="submit" id="add-item">Add Item</button>
+  </form>
+  <ul id="item-list">ITEMS</ul>
+  <div id="items"></div>
+</div>
+<script>
+  const form=document.querySelector('form');
+  const itemlist=document.getElementById('item-list');
+  const itemelecronics=document.getElementById('item-electronics');
+  const itemskincare=document.getElementById('item-skincare');
+  const itemfood=document.getElementById('item-food');
+  let items=[];
+
+  fetch('/carts').then(response=>response.json()).then(carts=>{
+  const table = document.createElement("table");
+  const headerRow = document.createElement("tr");
+  const itemHeader = document.createElement("th");
+  const amountHeader = document.createElement("th");
+  const categoryHeader=document.createElement("th");
+  itemHeader.textContent = "Item";
+  amountHeader.textContent = "Amount";
+  categoryHeader.textContent="Category";
+  headerRow.appendChild(itemHeader);
+  headerRow.appendChild(amountHeader);
+  headerRow.appendChild(categoryHeader);
+  table.appendChild(headerRow);
+
+  carts.forEach(cart=> {
+  const row = document.createElement("tr");
+  const itemCell = document.createElement("td");
+  const amountCell = document.createElement("td");
+  const categoryCell= document.createElement("td");
+  itemCell.textContent = cart.item;
+  amountCell.textContent = cart.amount;
+  categoryCell.textContent=cart.category;
+  row.appendChild(itemCell);
+  row.appendChild(amountCell);
+  row.appendChild(categoryCell);
+  table.appendChild(row);
+  });
+  const itemsDiv = document.getElementById("items");
+  itemsDiv.appendChild(table);
+  }) .catch(err => {
+  console.error('Unable to retrieve items:', err);
+  });
+  form.addEventListener('submit', event => {
+  event.preventDefault();
+  const formData = new FormData(form);
+  const itemName = formData.get('item');
+  const itemAmount = formData.get('amount');
+  const itemCategory= formData.get('category');
+
+  const obj = {                                     
+  item: itemName,
+  amount: itemAmount,
+  category: itemCategory
+  }
+  axios.post('http://localhost:5000/shop', obj)
+  .then(response => {
+  const data = response.data;
+  items.push(data);
+  renderItems();
+  form.reset();
+  })
+  .catch(error => console.error(error));
+  }
+  );
+
+  function renderItems(){
+    itemList.innerHTML = '';
+    items.forEach(item => {
+  const itemN = document.createElement('li');
+  const itemName = document.createElement('span');
+  const itemAmount = document.createElement('span');
+  const itemCategory=document.createElement('span');
+   const deleteButton = document.createElement('button');
+  itemName.textContent = item.item;
+  itemAmount.textContent = item.amount;
+  itemCategory.textContent=item.category;
+  deleteButton.textContent = 'Delete';
+  deleteButton.addEventListener('click', () => {
+  if (confirm('Are you sure you want to delete this expense?')) {
+  axios.delete(`http://localhost:5000/shop/${item.id}`)
+  .then(() => {
+  const index = items.findIndex(itm => itm.id === item.id);
+  items.splice(index, 1);
+  renderItems();
+  })
+  .catch(error => console.error(error));
+  } 
+  })
+}) 
+}
+  itemN.appendChild(itemName);
+  itemN.appendChild(itemAmount);
+  itemN.appendChild(deleteButton);
+  itemlist.appendChild(itemN);
+
+  // axios.get('http://localhost:5000/expenses')
+  // .then(response => {
+  // expenses = response.data;
+  // renderExpenses();
+  // })
+  // .catch(error => console.error(error));
+  
+</script>
+
+</body>
+</html>
+
+
+
