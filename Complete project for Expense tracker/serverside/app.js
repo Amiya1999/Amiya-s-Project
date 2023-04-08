@@ -37,6 +37,21 @@ const Login = sequelize.define('logins', {
 });
 Login.sync();
 
+
+const Expense = sequelize.define('expenses', {
+
+    expense: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    amount: {
+        type: Sequelize.FLOAT,
+        allowNull: true
+    }
+
+});
+Expense.sync();
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 
@@ -91,16 +106,102 @@ app.post("/login", (req, res) => {
             if (!passwordMatch) {
                 // Incorrect password, return error response
                 return res.status(401).json({ error: 'Incorrect password' });
+            }else{
+                res.redirect("/expense");
             }
 
-            // Password is correct, return success response
-            res.json({ message: 'Login successful' });
+            // // Password is correct, return success response
+            // res.json({ message: 'Login successful' });
         })
         .catch(err => {
             console.error(err);
             res.status(500).json({ error: 'Internal server error' });
         });
 });
+
+app.get("/expense", (req,res)=>{
+    res.sendFile(path.join(__dirname, '../clientside/expense.html'));
+});
+
+
+app.post("/expense", (req, res) => {
+    const expense = req.body.expense;
+    const amount = req.body.amount;
+    
+    Expense.create({
+        expense: expense,
+        amount: amount
+    })
+        .then(results => {
+            // Return saved data as JSON response
+            res.json(results);
+        })
+        .then(results => {
+            console.log(results);
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).json({ error: 'Internal server error' });
+        })
+    
+});
+
+// Update an expenditure record
+app.put("/expense/:id", (req, res) => {
+    const id = req.params.id;
+    const expenseName = req.body.expense;
+    const expenseAmount = req.body.amount;
+  
+    Expense.update({
+      expense: expenseName,
+      amount: expenseAmount
+    }, {
+      where: {
+        id: id
+      }
+    })
+      .then(result => {
+        console.log(result);
+        res.sendStatus(200);
+      })
+      .catch(err => {
+        console.error('Unable to update record:', err);
+        res.status(500).send("Error updating record");
+      });
+  });
+  
+  // Delete an expenditure record
+  app.delete("/expense/:id", (req, res) => {
+    const id = req.params.id;
+  
+    Expense.destroy({
+      where: {
+        id: id
+      }
+    })
+      .then(result => {
+        console.log(result);
+        res.sendStatus(200);
+      })
+      .catch(err => {
+        console.error('Unable to delete record:', err);
+        res.status(500).send("Error deleting record");
+      });
+  });
+
+app.get("/expenses", (req,res)=>{
+    Expense.findAll().then(expenses=>{
+    res.json(expenses);
+    }).catch(err => {
+        console.error('Unable to retrieve expenses:', err);
+        res.status(500).send("Error retrieving expenses");
+      });
+  });
+
+
+
+  
+
 
 app.listen(5000, () => {
     console.log("Working");
