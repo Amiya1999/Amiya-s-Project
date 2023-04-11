@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Expense Log</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Expense Details</h1>
+    <form id="expense-form" action="/expense" method="POST">
+      <label for="expense">Expense</label>
+      <input type="text" id="expense" name="expense" placeholder="Enter your Expense" required>
+      <label for="amount">Amount</label>
+      <input type="number" id="amount" name="amount" placeholder="Enter Amount" required>
+      <input type="submit" value="Submit">
+    </form>
+      <br>
+      <button id="razorpay-buy-premium">Buy Premium</button>
+      <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <br>
+    <br>
+    <ul id="expense-list">EXPENSES</ul>
+    <div id="expenditures"></div>
+    <div id="total-expenses"></div>
+    </div>
+   <script>
+    const form = document.querySelector('form');
+    const expenseList = document.getElementById('expense-list');
+    const totalExpenses = document.getElementById('total-expenses');
+    let expenses = [];
+    let editingExpense = null;
+    const token=localStorage.getItem('token');
+    
+    fetch("/expenses",{headers:{"Authorization":token}})                                       // getting data from db
+    .then(response => response.json())
+    .then(expenditures => {
+                                                                // making a table from expenditures
+    const table = document.createElement("table");
+    const headerRow = document.createElement("tr");
+    const expenseHeader = document.createElement("th");
+    const amountHeader = document.createElement("th");
+    expenseHeader.textContent = "Expense";
+    amountHeader.textContent = "Amount";
+    headerRow.appendChild(expenseHeader);
+    headerRow.appendChild(amountHeader);
+    table.appendChild(headerRow);
+    // getting each expense as arow
+    expenditures.forEach(expenditure => {
+    const row = document.createElement("tr");
+    const expenseCell = document.createElement("td");
+    const amountCell = document.createElement("td");
+    expenseCell.textContent = expenditure.expense;
+    amountCell.textContent = expenditure.amount;
+    row.appendChild(expenseCell);
+    row.appendChild(amountCell);
+    table.appendChild(row);
+    });
+    // Add the table to the expenditures div
+    const expendituresDiv = document.getElementById("expenditures");
+    expendituresDiv.appendChild(table);
+    }) 
+    .catch(err => {
+    console.error('Unable to retrieve expenditures:', err);
+    });
+  
+  
+    form.addEventListener('submit', event => {
+    event.preventDefault();
+    const formData = new FormData(form);
+    const expenseName = formData.get('expense');
+    const expenseAmount = formData.get('amount');
+    if (editingExpense) {
+    
+    const obj = {                               //editing a existing expense
+    expense: expenseName,
+    amount: expenseAmount
+    }
+    axios.put(`http://localhost:5000/expense/${editingExpense.id}`, obj)
+    .then(response => {
+    const data = response.data;
+    const index = expenses.findIndex(expense => expense.id === data.id);
+    expenses[index] = data;
+    renderExpenses();
+    editingExpense = null;
+    form.reset();
+    })
+    .catch(error => console.error(error));
+    } else {
+    
+    const obj = {                                     // new expense
+    expense: expenseName,
+    amount: expenseAmount
+    }
+    const token=localStorage.getItem('token');
+    axios.post('http://localhost:5000/expense', obj,{headers:{'Authorization':token}})
+    .then(response => {
+    const data = response.data;
+    localStorage.setItem("token",data.token);
+    expenses.push(data);
+    renderExpenses();
+    form.reset();
+    })
+    .catch(error => console.error(error));
+    }
+    });
+  
+    function renderExpenses() {
+    expenseList.innerHTML = '';
+    let total = 0;
+    expenses.forEach(expense => {
+    const expenseItem = document.createElement('li');
+    const expenseName = document.createElement('span');
+    const expenseAmount = document.createElement('span');
+    const editButton = document.createElement('button');
+     const deleteButton = document.createElement('button');
+    expenseName.textContent = expense.expense;
+    expenseAmount.textContent = expense.amount;
+    editButton.textContent = 'Edit';
+    deleteButton.textContent = 'Delete';
+    editButton.addEventListener('click', () => {
+    editingExpense = expense;
+    document.getElementById('expense').value = expense.expense;
+    document.getElementById('amount').value = expense.amount;
+    });
+    deleteButton.addEventListener('click', () => {
+    if (confirm('Are you sure you want to delete this expense?')) {
+    axios.delete(`http://localhost:5000/expense/${expense.id}`)
+    .then(() => {
+    const index = expenses.findIndex(exp => exp.id === expense.id);
+    expenses.splice(index, 1);
+    renderExpenses();
+    })
+    .catch(error => console.error(error));
+    } 
+    });
+    expenseItem.appendChild(expenseName);
+    expenseItem.appendChild(expenseAmount);
+    expenseItem.appendChild(editButton);
+    expenseItem.appendChild(deleteButton);
+    expenseList.appendChild(expenseItem);
+    total += parseFloat(expense.amount);
+   
+    
+    if (editingExpense && expense.id === editingExpense.id) {
+    expenseName= editingExpense.expense;
+    expenseAmount = editingExpense.amount;
+    }
+    });
+    totalExpenses.textContent = `Total Expenses: $${total}`;
+    }
+
+
+
+
+
+
+
+
+
+
+
+   
+
+    document.addEventListener('DOMContentLoaded', async () => {
+  document.getElementById('razorpay-buy-premium').onclick = async (event) => {
+    const token = localStorage.getItem('token');
+    const response = await axios.get('http://localhost:5000/purchase', {
+      headers: { "Authorization": token }
+    }).then(response => {
+      return response.data;
+    });
+
+    var options = {
+      'key_id': response.key_id,
+      'order_id': response.order_id.id,
+      "handler": async function (response) {
+        try {
+          await axios.post('http://localhost:5000/purchase/update', {
+            order_id: response.razorpay_order_id, // updated with response from successful payment
+            payment_id: response.razorpay_payment_id // updated with response from successful payment
+          }, { headers: { 'Authorization': token } });
+
+          alert('You are a premium user now');
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    };
+
+    const rzpl = new Razorpay(options);
+    rzpl.open();
+    event.preventDefault();
+
+    rzpl.on('payment.failed', function (response) {
+      try {
+        axios.post('http://localhost:5000/purchase/update', {
+          order_id: response.error.metadata.order_id, // updated with order_id from failed payment response
+          payment_id: response.error.metadata.payment_id // updated with payment_id from failed payment response
+        }, { headers: { 'Authorization': token } });
+
+        alert('Your payment failed');
+        console.log(response);
+      } catch (error) {
+        console.error(error);
+      }
+    });
+  }
+});
+
+     
+
+  </script>
+  
+</body>
+</html>
+
+
+
