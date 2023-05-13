@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat</title>
+</head>
+<body>
+
+  
+  <!-- Navbar -->
+  <a href="/">Group Chat App</a>
+  <button type="button">
+  </button>
+
+  <div>
+    <ul>
+      <li>
+        <div id="usernameNav">John Doe</div>
+      </li>
+      <li>
+        <button id="logoutBtn">Logout</button>
+      </li>
+    </ul>
+  </div>
+
+  <div class="container">
+    <div id="errMsg"></div>
+    <div id="successMsg"></div>
+  </div>
+  
+  <div class="container">
+    <h3>Groups</h3>
+    <div id="groupsContainer"></div>
+  </div>
+  
+
+  <!-- Control Buttons -->
+  <div class="container my-1">
+    <button id="showGroupMembersBtn">Show Group Members</button>
+    <button id="createGroupBtn">Create Group +</button>
+    <button id="sendRequestBtn">Send Request >></button>
+    <button id="receivedRequestsBtn">Show received requests</button>
+    <button id="showRequestHistoryBtn">Request History</button>
+    <button id="leaveGroupBtn">Leave Group</button>
+  </div>
+  
+  <div class="container" id="receivedRequestsOuterContainer" style="display: none;">
+    <button id="closeReceivedRequestsBtn">X</button>
+    <h4>Received Requests</h4>
+    <div id="receivedRequestsContainer"></div>
+  </div>
+  
+  <div class="container my-1 py-2" id="sendRequestContainer" style="display: none;">
+    <button id="closeSendRequestFormBtn">X</button>
+    <h4>Send Request</h4>
+    <form id="groupForm">
+      <label for="requestEmail">Receiver Email</label>
+      <input type="email" name="requestEmail" id="requestEmail" placeholder="abc@xyz.com" required>
+      <div>
+        <button type="submit" id="sendRequestSubmitBtn">Submit</button>
+      </div>
+    </form>
+  </div>
+  
+  
+ <!-- Create Group Form -->
+<div id="createGroupContainer" style="display: none;">
+  <button id="closeCreateGroupFormBtn">X</button>
+  <h4>Create Group</h4>
+  <form id="createGroupForm">
+      <label for="groupName">Group Name</label>
+      <input type="text" name="groupName" id="groupName" placeholder="Enter group name" required>
+      <div>
+          <button type="submit" id="createGroupSubmitBtn">Submit</button>
+      </div>
+  </form>
+</div>
+
+<!-- Chats/Send message -->
+<div id="chatContainer">
+  <form id="uploadFileForm">
+      <div>
+          <label for="uploadFile">
+              <i class="fa-solid fa-image"></i>
+          </label>
+      </div>
+      <div>
+          <input id="uploadFileInput" name="myFile" type="file" required>
+      </div>
+      <div>
+          <button type="submit">Upload</button>
+      </div>
+  </form>
+  <hr>
+  <h2>Chats</h2>
+  <div id="chatList"></div>
+  <hr>
+  <div>
+      <input type="text" id="sendMessage" placeholder="Enter message">
+      <button id="sendBtn">Send</button>
+  </div>
+</div>
+
+
+<div class="container" id="groupMembersContainer" style="display: none;">
+  <button id="closeGroupMembersBtn">X</button>
+  <h3>Group Members</h3>
+  <div class="container" id="groupMembersTableContainer">
+    <table>
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Position</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="groupMembersTableBody">
+        <!-- <tr>
+          <td>abc</td>
+          <td>abc@xyz.com</td>
+          <td>Admin</td>
+          <td>Admin/Remove</td>
+        </tr> -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<div id="requestHistoryContainer" style="display: none;">
+  <button id="closeRequestHistoryBtn">X</button>
+  <div>
+    <div>
+      <h3>Received Requests</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Group</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody id="receivedRequestsTableBody">
+          <!-- <tr>
+            <td>abc</td>
+            <td>abc@xyz.com</td>
+            <td>friends</td>
+            <td>accepted</td>
+            <td>2023-04-04</td>
+            <td>12:13:51</td>
+          </tr> -->
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h3>Sent Requests</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>Group</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody id="sentRequestsTableBody">
+          <!-- <tr>
+            <td>abc@xyz.com</td>
+            <td>friends</td>
+            <td>accepted</td>
+            <td>2023-04-04</td>
+            <td>12:13:51.000Z</td>
+          </tr> -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</body>
+
+<!-- Axios -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.1.3/axios.min.js"></script>
+<!-- Javascript -->
+<script src="chat.js"></script>
+
+</html>
