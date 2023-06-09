@@ -1,0 +1,119 @@
+/* 2nd css, compatible with mobile also, Styles for header */ 
+header {
+    background-color: #24292e;
+    color: white;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 36px;
+    margin: 0;
+}
+
+/* Styles for form */
+.form {
+    max-width: 500px;
+    margin: 20px auto;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+input[type="submit"] {
+    background-color: #24292e;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Styles for expense list */
+#expenseList {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+li {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    font-size: 16px;
+}
+
+li:last-child {
+    border-bottom: none;
+}
+
+/* Styles for pagination */
+#pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+#pagination li {
+    margin-right: 10px;
+}
+
+#pagination li a {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #24292e;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+#pagination li.active a {
+    background-color: #ccc;
+    color: #24292e;
+}
+
+/* Styles for download button */
+#downloadexpense {
+    background-color: #24292e;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+/* Styles for leaderboard */
+.container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#leaderboard {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#leaderboard li {
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 16px;
+}

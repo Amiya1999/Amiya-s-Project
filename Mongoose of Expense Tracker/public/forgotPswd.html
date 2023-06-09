@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgot password</title>
+    <link rel="stylesheet" href="signup.css">
+</head>
+
+<body>
+    <form style="border:1px solid #ccc">
+        <div class="container">
+            <h1>Forgot your password</h1>
+            <p>Please enter the email address you'd like your password reset information sent to</p>
+            <hr>
+
+            <label for="email"><b>Enter email address</b></label>
+            <input type="text" id="email" placeholder="Enter Email*" name="email" required>
+
+            <div class="clearfix">
+                <button type="submit" class="forgotbtn" id="forgot-button">Request reset link</button>
+            </div>
+            <a href="./login.html" style="color:dodgerblue">Back To Login</a>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.6/axios.js"></script>
+        <script src="forgotPswd.js"></script>
+    </form>
+</body>
+
+</html>

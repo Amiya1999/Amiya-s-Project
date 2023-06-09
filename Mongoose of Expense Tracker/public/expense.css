@@ -1,0 +1,227 @@
+/* 1st css */
+header {
+    padding: 10px;
+    text-align: center;
+    background: rgba(3, 4, 57, 0.637);
+    color: white;
+    font-size: 20px;
+}
+
+body {
+    background-image: url('https://images.unsplash.com/photo-1593538313188-7a6ab30a8ae4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80');
+}
+
+.form {
+    background-size: 100% 100%;
+    margin: auto;
+    padding: 30px;
+    border: 3px solid rgb(13, 3, 50);
+    width: 810px;
+    height: auto;
+    background-color: rgba(156, 223, 208, 0.759);
+}
+
+.container {
+    background-size: 10% 10%;
+    padding: 8px;
+    border: 1px solid rgb(13, 3, 50);
+    width: 250px;
+    height: 20px;
+    background-color: rgba(144, 144, 141, 0.626);
+}
+
+input[type=text] {
+    width: 99%;
+    height: 20px;
+}
+
+input[type=submit] {
+    width: 28%;
+    height: 20px;
+    background-color: rgb(200, 199, 236);
+    cursor: cell;
+}
+
+select {
+    cursor: grab;
+    width: 12%;
+    height: 20px;
+}
+
+form {
+    text-align: left;
+    color: rgb(3, 1, 5);
+}
+
+button[type=del] {
+    background-color: #ba1818;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button[type=edit] {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* button[type=pre] {
+            background-color: blueviolet;
+            border: black;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 15px;
+            float: right;
+        } */
+
+.prem {
+    --c: #fff;
+    /* text color */
+    background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%) var(--_p, 100%)/300% no-repeat,
+        #004dff;
+    /* background color */
+    color: #0000;
+    border: none;
+    transform: perspective(500px) rotateY(calc(20deg*var(--_i, -1)));
+    text-shadow: calc(var(--_i, -1)* 0.08em) -.01em 0 var(--c),
+        calc(var(--_i, -1)*-0.08em) .01em 2px #0004;
+    outline-offset: .1em;
+    transition: 0.3s;
+    float: right;
+}
+
+.prem:hover,
+.prem:focus-visible {
+    --_p: 0%;
+    --_i: 1;
+}
+
+.prem:active {
+    text-shadow: none;
+    color: var(--c);
+    box-shadow: inset 0 0 9e9q #0005;
+    transition: 0s;
+}
+
+.prem {
+    font-weight: bold;
+    font-size: 2rem;
+    margin: 0;
+    cursor: pointer;
+    padding: .1em .3em;
+}
+
+#leaderboard {
+    background: rgba(46, 120, 223, 0.557);
+    float: inherit;
+}
+
+#message {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: large;
+    color: #2338b2;
+    text-decoration: underline overline;
+    text-decoration-color: rgb(134, 134, 233);
+    text-decoration-thickness: 4px;
+    text-align: center;
+}
+
+#rowPerPage {
+    float: left;
+}
+
+#downloadexpense {
+    float: right;
+}
+
+/* CSS for leaderboard button */
+.lbButton {
+    color: #fff;
+    padding: 15px 25px;
+    border-radius: 100px;
+    background-color: #4C43CD;
+    background-image: radial-gradient(93% 87% at 87% 89%, rgba(0, 0, 0, 0.23) 0%, transparent 86.18%), radial-gradient(66% 87% at 26% 20%, rgba(255, 255, 255, 0.41) 0%, rgba(255, 255, 255, 0) 69.79%, rgba(255, 255, 255, 0) 100%);
+    box-shadow: 2px 19px 31px rgba(0, 0, 0, 0.2);
+    font-weight: bold;
+    font-size: 16px;
+
+    border: 0;
+
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+
+    cursor: pointer;
+}
+
+/* < !-- HTML !--><button class="button-86" role="button">Button 86</button> */
+
+/* CSS for download button*/
+#downloadexpense {
+    align-items: center;
+    appearance: none;
+    background-color: #FCFCFD;
+    border-radius: 4px;
+    border-width: 0;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+    box-sizing: border-box;
+    color: #36395A;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: "JetBrains Mono", monospace;
+    height: 48px;
+    justify-content: center;
+    line-height: 1;
+    list-style: none;
+    overflow: hidden;
+    padding-left: 16px;
+    padding-right: 16px;
+    position: relative;
+    text-align: left;
+    text-decoration: none;
+    transition: box-shadow .15s, transform .15s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+    will-change: box-shadow, transform;
+    font-size: 18px;
+}
+
+#downloadexpense:focus {
+    box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+}
+
+#downloadexpense:hover {
+    box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+    transform: translateY(-2px);
+}
+
+#downloadexpense:active {
+    box-shadow: #D6D6E7 0 3px 7px inset;
+    transform: translateY(2px);
+}
+
+#pagination {
+    margin-left: 160px;
+}
